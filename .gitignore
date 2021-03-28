@@ -1,0 +1,10 @@
+*.pyd
+example.py
+*.gch
+TS/test.py
+build/
+setup.sh
+VideoSummarization.py
+TS_summarization.py
+TS_Classification.py
+quantization.py
