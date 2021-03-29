@@ -21,7 +21,7 @@ python setup.py build_ext --inplace
 This minimal working example
 
 ```python
-st = TS.TemporelStability_Glouton(n_clusters=4, miniBtach=False)
+st = TS.TemporelStability(n_clusters=4, miniBtach=False)
 date_vec = np.arange(frames.shape[0]) # or rank of available days in the year
 
 # Quantification of values

@@ -15,7 +15,7 @@ import re
 import random
 import TemporalStability as c_func
 
-class TemporelStability_Glouton:
+class TemporelStability:
     def __init__(self, n_clusters=2, miniBtach=False, data="all"):
         """
 
