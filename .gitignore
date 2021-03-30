@@ -4,7 +4,7 @@ example.py
 TS/test.py
 build/
 setup.sh
-VideoSummarization.py
+VideoSummarization_old.py
 TS_summarization.py
 TS_Classification.py
 quantization.py

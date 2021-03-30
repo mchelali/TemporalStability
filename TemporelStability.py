@@ -24,7 +24,7 @@ class TemporelStability:
         # Initialisation du KMeans
         if miniBtach == True:
             self.km = MiniBatchKMeans(
-                n_clusters=n_clusters, init='k-means++', max_iter=100, random_state=0)
+                n_clusters=n_clusters, init='k-means++', max_iter=100, batch_size=100, random_state=0)
         else:
             self.km = KMeans(n_clusters=n_clusters,
                              init='k-means++', max_iter=100, random_state=0)
@@ -56,31 +56,31 @@ class TemporelStability:
             self.l, self.c, self.t = X.shape
             self.d = 1
 
-        print(self.l, self.c, self.d, self.t)
+        #print(self.l, self.c, self.d, self.t)
         if self.data == "10":
             self.nbPix = int(self.l * self.c * self.t * 0.1)
-            print("nb pixel: ", self.nbPix)
+            #print("nb pixel: ", self.nbPix)
             idx = np.random.randint(self.l * self.c * self.t, size=self.nbPix)
-            print("shape randint ", idx.shape)
+            #print("shape randint ", idx.shape)
             self.features = np.random.choice(X.reshape((-1, self.d)), self.nbPix)
         elif self.data != 'all':
             if self.selectedPoint is None:
                 print("Please give an array where intersted point are equal to 1")
                 return -1
             else:
-                print("Discrize of selected points ")
+                #print("Discrize of selected points ")
                 self.features = X[self.selectedPoint != 0].reshape(
                     (-1, 1))
         else:
-            print("discrize all points ")
+            #print("discrize all points ")
             self.features = X.reshape((-1, self.d))
 
-        print("X shape ", X.shape)
-        print("features shape ",  self.features.shape)
+        #print("X shape ", X.shape)
+        #print("features shape ",  self.features.shape)
         #exit(0)
         #  passer les donnees au kmeans pour trouver les centroides
         self.km.fit(self.features)
-        print(self.km.cluster_centers_)
+        #print(self.km.cluster_centers_)
         self.cluster = (self.km.cluster_centers_.squeeze())
 
         X = X.reshape((-1, self.d))

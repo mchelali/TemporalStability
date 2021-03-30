@@ -1,6 +1,7 @@
 #-*-coding: utf-8 -*-
 import numpy as np
 import skimage.io as sk
+from skimage import transform as sktrans
 import TemporelStability as TS
 import matplotlib.pyplot as plt
 import cv2
@@ -53,23 +54,31 @@ def readSTIS(path_data, extension, index="MS"):
 
     return frames
 
-def readVideo(path, color=True):
+def readVideo(path, size_ratio=None, color=True):
     """
         path: path to the video
+        size_ratio: None or tuple. if None read the video with it real size else resize the spatial with gived H and W
         color: if True, read frames in color mode else read them in gray mode
     """
     
     # Create a VideoCapture object and read from input file
     # If the input is the camera, pass 0 instead of the video file name
-    cap = cv2.VideoCapture(path)
+    cap = cv2.VideoCapture(path, cv2.CAP_FFMPEG)
+    #print("CAP " , cap)
 
     length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    
     width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
     channels = 3 if color else 1 #int(cap.get(cv2.CAP_PROP_CHANNEL))
     fps    = cap.get(cv2.CAP_PROP_FPS)
-
     #print(length, channels, height, width, fps)
+    if not size_ratio is None:
+        width = int(width * size_ratio[1])
+        height = int(height *size_ratio[0])
+
+        #print(length, channels, height, width, fps)
     if color:
         frames = np.zeros((length, height, width, channels), dtype=np.uint8)
     else:
@@ -83,17 +92,23 @@ def readVideo(path, color=True):
     while(cap.isOpened()):
         # Capture frame-by-frame
         ret, frame = cap.read()
+        
         if ret == True:
+            
             if color:
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             else:
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            #print(frame.shape)
+
+            if not size_ratio is None:
+                frame = sktrans.resize(frame, (height, width), preserve_range=True)
+            #print(i, "=", ret, frame.dtype, np.max(frame))
             frames[i] = frame
             i+=1
         # Break the loop
         else: 
             break
+
     # When everything done, release the video capture object
     cap.release()
     
