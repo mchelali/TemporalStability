@@ -1,9 +1,9 @@
 # Spatio-temporal stability analysis
 Spatio-temporal features extraction that measure the stabilty. The proposed method is based on a compression algorithm named Run Length Encoding. The workflow of the method is presented bellow.
 
-![Temporal Stability Workflow](docs/TemporalStability.png)
+![Temporal Stability Workflow](TemporalStability.png)
 
-# Setup
+# Installation
 Requierment packages installation
 ```bash
 conda install scikit-image scikit-learn opencv gdal
@@ -21,7 +21,7 @@ python setup.py build_ext --inplace
 This minimal working example
 
 ```python
-st = TS.TemporelStability(n_clusters=4, miniBtach=False)
+st = TS.TemporelStability(n_clusters, miniBtach, data="all")
 date_vec = np.arange(frames.shape[0]) # or rank of available days in the year
 
 # Quantification of values
@@ -40,7 +40,10 @@ ts_s = st.get_TS_s(date_vec)
 ts_st = st.get_TS_st(date_vec)
 ```
 
-Furthermore, [this jupyter notebook](example.ipynb) present the obtained result on a example of Satellite Images Time Series analysis.
+
+# Example: Stability analysis of Sentinel-2 Satellite Image Time Series
+
+TO DO
 
 
 # Reference
