@@ -143,10 +143,6 @@ class TemporelStability:
         self.ts = np.ascontiguousarray(np.zeros((self.l, self.c, 3)), dtype=np.double)
         c_func.getTemporalStability(self.serie.astype(np.double), date_vec, self.ts)
 
-        self.ts[:, :, 0] = self.ts[:, :, 0] / (max(date_vec) - min(date_vec))
-        self.ts[:, :, 1] = self.ts[:, :, 1] / len(date_vec)
-        self.ts[:, :, 2] = self.ts[:, :, 2] / (max(date_vec) - min(date_vec))
-
         if not (self.selectedPoint is None):
             self.ts[self.selectedPoint == 0] = 0
         
@@ -220,10 +216,6 @@ class TemporelStability:
         self.ts_t = np.ascontiguousarray(np.zeros((self.l, self.c, 3)), dtype=np.double)
         c_func.getTemporalStability_temp(self.serie.astype(np.double), date_vec, self.ts_t)
 
-        self.ts_t[:, :, 0] = self.ts_t[:, :, 0] / (max(date_vec) - min(date_vec))
-        self.ts_t[:, :, 1] = self.ts_t[:, :, 1] / len(date_vec)
-        self.ts_t[:, :, 2] = self.ts_t[:, :, 2] / (max(date_vec) - min(date_vec))
-
         if not (self.selectedPoint is None):
             self.ts_t[self.selectedPoint == 0] = 0
         
@@ -265,10 +257,6 @@ class TemporelStability:
         # print("Python: Calcul des MS, NB et MSS;\n dates = ", date_vec)
         self.ts_s = np.ascontiguousarray(np.zeros((self.l, self.c, 3)), dtype=np.double)
         c_func.getTemporalStability_spatio(self.serie.astype(np.double), date_vec, self.ts_s )
-
-        self.ts_s[:, :, 0] = self.ts_s[:, :, 0] / (max(date_vec) - min(date_vec))
-        self.ts_s[:, :, 1] = self.ts_s[:, :, 1] / len(date_vec)
-        self.ts_s[:, :, 2] = self.ts_s[:, :, 2] / (max(date_vec) - min(date_vec))
 
         if not (self.selectedPoint is None):
             self.ts_s[self.selectedPoint == 0] = 0
@@ -318,10 +306,6 @@ class TemporelStability:
         date_vec = np.ascontiguousarray( np.array(date_vec), dtype=np.int)
         self.ts_st = np.ascontiguousarray(np.zeros((self.l, self.c, 3)), dtype=np.double)
         c_func.getTemporalStability_spatiotemp(self.serie.astype(np.double), date_vec, self.ts_st )
-
-        self.ts_st[:, :, 0] = self.ts_st[:, :, 0] / (max(date_vec) - min(date_vec))
-        self.ts_st[:, :, 1] = self.ts_st[:, :, 1] / len(date_vec)
-        self.ts_st[:, :, 2] = self.ts_st[:, :, 2] / (max(date_vec) - min(date_vec))
 
         if not (self.selectedPoint is None):
             self.ts_st[self.selectedPoint == 0] = 0

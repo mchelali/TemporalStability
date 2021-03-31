@@ -292,6 +292,8 @@ void getTS(double ***sits, const int lin, const int col, const int dim, int *dat
             int ms, nb, mss;
             double *profil = getTemporalProfil(sits, dim, i, j);
             vector<int> ts = rle(profil, dim);
+
+            free(profil);
             nb = (int) ts.size();
 
             vector<int>::iterator result;
@@ -324,6 +326,8 @@ void getTS_temp(double ***sits, int lin, int col, int dim, int w, int *dates, do
             int ms, nb, mss;
             double *profil = getTemporalProfil(sits, dim, i, j);
             vector<int> ts = rle_temp(profil, dim, w);
+
+            free(profil);
             nb = (int) ts.size();
 
             vector<int>::iterator result;
@@ -385,6 +389,9 @@ void getTS_spatiotemp(double ***sits, int lin, int col, int dim, int ws, int wt,
             int ms, nb, mss, nb_profils;
             double **profil = getTempProfilsNeighbors(sits, lin, col, dim, i, j, ws, nb_profils);
             vector<int> ts = rle_spatiotemp(profil, dim, nb_profils, wt);
+
+            destroyTwoDimenArrayOnHeapUsingFree(profil, nb_profils, dim);
+
             nb = (int) ts.size();
 
             vector<int>::iterator result;
@@ -666,7 +673,7 @@ static PyObject *getTemporalStability(PyObject *self, PyObject *args){
         }
     }
 
-    printf("Liberation de la memoire \n");
+    //printf("Liberation de la memoire \n");
     free_Carrayptrs3D(sits);
     free_Carrayptrs3D(features);
     return Py_BuildValue("O", output);
@@ -745,7 +752,7 @@ static PyObject *getTemporalStability_temp(PyObject *self, PyObject *args){
         }
     }
 
-    printf("Liberation de la memoire \n");
+    //printf("Liberation de la memoire \n");
     free_Carrayptrs3D(sits);
     free_Carrayptrs3D(features);
     return Py_BuildValue("O", output);
@@ -981,7 +988,7 @@ static PyObject *getReconstruncted_TemporalStability(PyObject *self, PyObject *a
         }
     }
 
-    printf("Liberation de la memoire \n");
+    //printf("Liberation de la memoire \n");
     free_Carrayptrs3D(sits);
     free_Carrayptrs3D(features);
     return Py_BuildValue("O", output);
@@ -1060,7 +1067,7 @@ static PyObject *getReconstruncted_TemporalStability_temp(PyObject *self, PyObje
         }
     }
 
-    printf("Liberation de la memoire \n");
+    //printf("Liberation de la memoire \n");
     free_Carrayptrs3D(sits);
     free_Carrayptrs3D(features);
     return Py_BuildValue("O", output);
@@ -1139,7 +1146,7 @@ static PyObject *getReconstruncted_TemporalStability_spatio(PyObject *self, PyOb
         }
     }
 
-    printf("Liberation de la memoire \n");
+    //printf("Liberation de la memoire \n");
     free_Carrayptrs3D(sits);
     free_Carrayptrs3D(features);
     return Py_BuildValue("O", output);
@@ -1218,7 +1225,7 @@ static PyObject *getReconstruncted_TemporalStability_spatiotemp(PyObject *self, 
         }
     }
 
-    printf("Liberation de la memoire \n");
+    //printf("Liberation de la memoire \n");
     free_Carrayptrs3D(sits);
     free_Carrayptrs3D(features);
     return Py_BuildValue("O", output);
