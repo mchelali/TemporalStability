@@ -46,7 +46,7 @@ def compute_TS(path_dataset, result_path, n_clusters=4, miniBtach=True):
         os.makedirs(result_path + "TS_st/" + folder + "/", exist_ok=True)
 
         
-        frames = tools.readVideo(file, size_ratio=(0.7,0.7), color=False)#.astype(np.float) #/ 255.
+        frames = tools.readVideo(file, size_ratio=None, color=False)#.astype(np.float) #/ 255.
         #print("Shape of frames: ", frames.shape)
         if frames.ndim == 4:
             frames = frames.transpose((1,2,3,0))

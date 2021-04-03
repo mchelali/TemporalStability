@@ -14,20 +14,31 @@ import pickle as pkl
 import re
 import random
 import TemporalStability as c_func
+from yellowbrick.cluster import KElbowVisualizer
 
 class TemporelStability:
-    def __init__(self, n_clusters=2, miniBtach=False, data="all"):
+    def __init__(self, n_clusters=8, miniBtach=False, data="all"):
         """
 
         """
         self.selectedPoint = None
         # Initialisation du KMeans
+        
+        if n_clusters is None:
+            n_clusters = 8 # default value of n_clusters is 8
+            self.n_clusters = None
+
         if miniBtach == True:
             self.km = MiniBatchKMeans(
                 n_clusters=n_clusters, init='k-means++', max_iter=100, batch_size=100, random_state=0)
         else:
             self.km = KMeans(n_clusters=n_clusters,
                              init='k-means++', max_iter=100, random_state=0)
+
+        
+        self.elbow = KElbowVisualizer(self.km, k=(4,10))
+        
+        self.km_param = self.km.get_params()
 
         self.data = data
 
@@ -78,6 +89,17 @@ class TemporelStability:
         #print("X shape ", X.shape)
         #print("features shape ",  self.features.shape)
         #exit(0)
+        
+        if self.n_clusters is None:
+            self.elbow.fit(self.features)
+            self.n_clusters = self.elbow.elbow_value_
+            self.km_param['n_clusters'] = self.n_clusters
+            print(self.km_param)
+            self.km.set_params(**self.km_param)
+
+            #self.elbow.show()
+
+        
         #  passer les donnees au kmeans pour trouver les centroides
         self.km.fit(self.features)
         #print(self.km.cluster_centers_)
