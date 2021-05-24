@@ -27,6 +27,8 @@ class TemporelStability:
         if n_clusters is None:
             n_clusters = 8 # default value of n_clusters is 8
             self.n_clusters = None
+        else:
+            self.n_clusters = n_clusters
 
         if miniBtach == True:
             self.km = MiniBatchKMeans(
@@ -73,7 +75,7 @@ class TemporelStability:
             #print("nb pixel: ", self.nbPix)
             idx = np.random.randint(self.l * self.c * self.t, size=self.nbPix)
             #print("shape randint ", idx.shape)
-            self.features = np.random.choice(X.reshape((-1, self.d)), self.nbPix)
+            self.features = X.reshape((-1, self.d))[idx] #np.random.choice(X.reshape((-1, self.d)), self.nbPix)
         elif self.data != 'all':
             if self.selectedPoint is None:
                 print("Please give an array where intersted point are equal to 1")

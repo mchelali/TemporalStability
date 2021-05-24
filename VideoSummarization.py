@@ -87,7 +87,7 @@ if __name__ == '__main__':
     path = "E:/MoviesFights/"
 
 
-    compute_TS(path_dataset = path + "Datasets/", result_path = "E:/MoviesFights/", n_clusters=8, miniBtach=True)
+    compute_TS(path_dataset = path + "Datasets/", result_path = "E:/MoviesFights/", n_clusters=None, miniBtach=True)
     
 
     
